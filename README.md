@@ -4,7 +4,7 @@ Check certificate validity of remailers and pingers.
 ```
 #!/bin/bash
 #
-# VerifyCerts.sh
+# VerifyCerts.sh  1.2
 #
 # This script checks the certificate dates for chosen remailer and
 # and pinger and signals if a certificate has expired.  It is mainly
@@ -15,9 +15,13 @@ Check certificate validity of remailers and pingers.
 # remove that name from the SYSarray array.
 #
 # Execute as: ./VerifyCerts.sh or /path/to/VerifyCerts.sh
+# or mail results to an email address using a cronjob:
+# 0 6 * * * /path/to/VerifyCerts.sh your@email.address    # run at 6 AM and send to attached enail
 #
 
 filePath=${0%/*}  # current file path
+
+emailaddr=$1
 
 SYSarray=(
 anonymitaet-im-inter.net
@@ -78,13 +82,21 @@ echo ""
 echo "--- Results ---"
 echo ""
 
+
+sendemail=0
+
 while read line1; do
       if [[ $line1 =~ "Days remaining:" ]] && [[ $line1 =~ "-" ]]; then
          echo "$line1          <===EXPIRED!" >> $filePath/varVC.txt3
+         sendemail=1
          else
          echo "$line1" >> $filePath/varVC.txt3
       fi
 done< $filePath/varVC.txt2
+
+if [[ $sendemail == "1" ]] && [[ ! $emailaddr == "" ]]; then              # send results in email if available
+   mail -s "From VerifyCerts.sh" $emailaddr < $filePath/varVC.txt3
+fi
 
 cat $filePath/varVC.txt3
 
