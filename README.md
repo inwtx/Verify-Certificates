@@ -88,5 +88,9 @@ done< $filePath/varVC.txt2
 
 cat $filePath/varVC.txt3
 
+rm $filePath/varVC.txt
+rm $filePath/varVC.txt2
+rm $filePath/varVC.txt3
+
 exit 0
 ```
