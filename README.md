@@ -14,9 +14,9 @@ Check certificate validity of remailers and pingers.
 # needed.  If the script hangs on a displayed name, cancel it and
 # remove that name from the SYSarray array.
 #
-# Execute as: ./VerifyCerts.sh or /path/to/VerifyCerts.sh
-# or mail results to an email address using a cronjob:
-# 0 6 * * * /path/to/VerifyCerts.sh your@email.address    # run at 6 AM and send to attached enail
+# Execute as: /path/to/VerifyCerts.sh
+# You can email results to an email address using a cronjob:
+# 0 6 * * * /path/to/VerifyCerts.sh your@email.address    # run at 6 AM and send to attached email
 #
 
 filePath=${0%/*}  # current file path
